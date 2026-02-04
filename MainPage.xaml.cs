@@ -14,11 +14,34 @@
             count++;
 
             if (count == 1)
+            {
                 CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+            }
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            else if (count >= 10)
+            {
+                botImage.IsVisible = false;
+                CounterBtn.Text = "Pilt kadus ära! Vajuta reset.";
+            }
+  
+            else
+            {
+                CounterBtn.Text = $"Clicked {count} times";
+                botImage.Rotation += 100;
+
+                var rnd = new Random();
+                var rndColor = Color.FromRgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+                BackgroundColor = rndColor;
+                SemanticScreenReader.Announce(CounterBtn.Text);
+            }
+
+        }
+
+        private void ResetBtn_Clicked(object sender, EventArgs e)
+        {
+            count = 0;
+            CounterBtn.Text = "Alustame uuesti!";
+            botImage.Rotation = 0;
         }
     }
 }
